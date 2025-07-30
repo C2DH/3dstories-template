@@ -11,9 +11,7 @@ const AppRouterLayout: React.FC<{
   return (
     <>
       <ViewportManager />
-      <pre>
-        <code>{JSON.stringify(tableOfContents, null, 2)}</code>
-      </pre>
+
       <Menu lang={lang} items={tableOfContents} />
       <Outlet />
     </>

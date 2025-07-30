@@ -49,3 +49,23 @@ export const useViewportStore = create<ViewportState>((set) => ({
       }
     }),
 }))
+
+interface ScrollState {
+  scrollRatio: number
+  page: number
+  menuLinkPosition: number
+  setScrollRatio: (scrollRatio: number) => void
+  setMenuLinkPosition: (menuLinkPosition: number) => void
+}
+
+export const useScrollStore = create<ScrollState>((set) => ({
+  scrollRatio: 0,
+  page: 0,
+  menuLinkPosition: 0,
+
+  setScrollRatio: (scrollRatio) =>
+    set({
+      scrollRatio,
+    }),
+  setMenuLinkPosition: (menuLinkPosition) => set({ menuLinkPosition }),
+}))
