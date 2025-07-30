@@ -11,10 +11,32 @@ export async function getStaticPaths() {
   ).flat()
 }
 
-export async function GET({ props }: { props: { story: { data: any } } }) {
+export async function GET({
+  props,
+}: {
+  props: {
+    story: {
+      id: string
+
+      data: {
+        title: string
+        content?: string
+      }
+    }
+  }
+}) {
   if (!props.story) {
     return new Response('Story not found', { status: 404 })
   }
   console.log('Fetching stories...', props)
-  return new Response(JSON.stringify(props.story.data, null, 2))
+  return new Response(
+    JSON.stringify(
+      {
+        id: props.story.id,
+        ...props.story.data,
+      },
+      null,
+      2
+    )
+  )
 }

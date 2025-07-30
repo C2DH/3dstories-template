@@ -4,24 +4,24 @@ import { AvailableLanguages, Basename, DefaultLanguage } from "../constants";
 import ViewportManager from "./ViewportManager";
 import AppComponent from "./App";
 import Menu from "./Menu";
-import type { StoryTableOfContent } from "../types";
+import type { StorySection, StoryTableOfContent } from "../types";
 const { pathname } = Astro.url;
 // get all stories
-const stories = await getCollection('stories')
+const stories = await getCollection('stories')  as any[] as StoryTableOfContent[];
 console.log(stories.length, 'stories found', stories);
 
 // get current language 
 const lang:string  = (Astro.currentLocale || DefaultLanguage)
 
-const TableOfContents:StoryTableOfContent[] = stories.map(story => ({
+const TableOfContents:StoryTableOfContent[] = stories.map((story:StoryTableOfContent) => ({
   id: story.id,
   title: story.data.title[lang],
   ordering: story.data.ordering || stories.length,
-  sections: story.data.sections.map((section, idx) => ({
+  sections: story.data.sections.map((section:StorySection, idx:number) => ({
     id: `${story.id}-${idx}`,
-    title: section.title[lang],
+    title: section.title[lang as string],
   })),
-})).sort((a, b) => a.ordering - b.ordering);
+})).sort((a:StoryTableOfContent, b:StoryTableOfContent) => a.ordering - b.ordering);
 
 ---
 

@@ -2,8 +2,12 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router'
 import ViewportManager from './ViewportManager'
 import Menu from './Menu'
 import type { StoryTableOfContent } from '../types'
-import { AvailableLanguages } from '../constants'
-
+import { AvailableLanguages, Basename } from '../constants'
+import type { AvailableLanguage } from '../constants'
+import Story from './Story'
+import '../styles/global.css'
+import ScrollDebug from './ScrollDebug'
+import World from './World'
 const AppRouterLayout: React.FC<{
   lang: string
   tableOfContents: StoryTableOfContent[]
@@ -11,9 +15,10 @@ const AppRouterLayout: React.FC<{
   return (
     <>
       <ViewportManager />
-
+      <ScrollDebug />
       <Menu lang={lang} items={tableOfContents} />
       <Outlet />
+      <World></World>
     </>
   )
 }
@@ -22,7 +27,7 @@ const App: React.FC<{
   lang: string
   basename: string
   tableOfContents: StoryTableOfContent[]
-  availableLanguages: string[]
+  availableLanguages: AvailableLanguage[]
 }> = ({ basename, availableLanguages = AvailableLanguages, ...props }) => {
   const router = createBrowserRouter(
     [
@@ -37,9 +42,25 @@ const App: React.FC<{
           ...availableLanguages.map((lang) => ({
             path: lang,
             element: null,
+
             children: props.tableOfContents.map((story) => ({
               path: story.id,
-              element: null,
+              Component: Story,
+              loader: async () => {
+                const dataUrl = `${Basename}/data/${story.id}.json`
+                // return data from here
+                console.debug(
+                  '[App] loader for story:',
+                  story.id,
+                  '- lang:',
+                  lang,
+                  dataUrl
+                )
+                return {
+                  lang,
+                  data: await fetch(dataUrl).then((res) => res.json()),
+                }
+              },
             })),
           })),
         ],

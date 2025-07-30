@@ -55,14 +55,19 @@ interface ScrollState {
   page: number
   menuLinkPosition: number
   setScrollRatio: (scrollRatio: number) => void
+  setPage: (page: number) => void
   setMenuLinkPosition: (menuLinkPosition: number) => void
 }
 
-export const useScrollStore = create<ScrollState>((set) => ({
+export const useScrollStore = create<ScrollState>((set, get) => ({
   scrollRatio: 0,
   page: 0,
   menuLinkPosition: 0,
-
+  setPage: (page) => {
+    if (get().page !== page) {
+      set({ page })
+    }
+  },
   setScrollRatio: (scrollRatio) =>
     set({
       scrollRatio,

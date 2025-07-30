@@ -16,3 +16,19 @@ sections:
       en: Caffeine is a natural stimulant that affects the brain and nervous system. It is the most widely consumed psychoactive substance in the world, and is used to improve alertness and concentration. It is also used to reduce fatigue and improve mood.
       fr: La caféine est un stimulant naturel qui agit sur le cerveau et le système nerveux. C'est la substance psychoactive la plus consommée au monde, et elle est utilisée pour améliorer l'attention et la concentration. Elle est également utilisée pour réduire la fatigue et améliorer l'humeur.
       de: Koffein ist ein natürlicher Stimulans, das auf das Gehirn und das Nervensystem wirkt. Es ist die weltweit am weitesten verbreitete psychoaktive Substanz und wird verwendet, um die Aufmerksamkeit und Konzentration zu verbessern. Es wird auch verwendet, um die Müdigkeit zu reduzieren und die Stimmung zu verbessern.
+  - title:
+      en: How it works
+      fr: Comment ça marche
+      de: Wie es funktioniert
+    content:
+      en: Caffeine works by blocking the action of a neurotransmitter called adenosine, which promotes sleep and relaxation. By blocking adenosine, caffeine increases the levels of other neurotransmitters like dopamine and norepinephrine, which can improve mood and cognitive function.
+      fr: La caféine agit en bloquant l'action d'un neurotransmetteur appelé adénosine, qui favorise le sommeil et la relaxation. En bloquant l'adénosine, la caféine augmente les niveaux d'autres neurotransmetteurs comme la dopamine et la noradrénaline, ce qui peut améliorer l'humeur et la fonction cognitive.
+      de: Koffein wirkt, indem es die Wirkung eines Neurotransmitters namens Adenosin blockiert, der Schlaf und Entspannung fördert. Durch die Blockierung von Adenosin erhöht Koffein die Spiegel anderer Neurotransmitter wie Dopamin und Noradrenalin, was die Stimmung und kognitive Funktion verbessern kann.
+  - title:
+      en: Benefits and risks
+      fr: Avantages et risques
+      de: Vorteile und Risiken
+    content:
+      en: Caffeine can have several benefits, including improved alertness, concentration, and mood
+      fr: La caféine peut avoir plusieurs avantages, notamment une meilleure vigilance, concentration et humeur
+      de: Koffein kann mehrere Vorteile haben, darunter verbesserte Wachsamkeit, Konzentration und Stimmung

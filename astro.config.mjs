@@ -24,7 +24,7 @@ const locales = process.env.I18N_LANGUAGES
   ? process.env.I18N_LANGUAGES.split(',')
   : ['en']
 const defaultLocale = process.env.I18N_DEFAULT_LOCALE || 'en'
-const base = process.env.PUBLIC_BASE || '/3dstories-template'
+const base = process.env.PUBLIC_BASE || ''
 console.log(chalk.gray('\nNODE_ENV '), chalk.bold(process.env.NODE_ENV))
 console.log(chalk.gray('PUBLIC_BASE '), chalk.bold(base))
 console.log(chalk.gray('I18N_LANGUAGES '), chalk.bold(locales.join(', ')))

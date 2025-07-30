@@ -3,10 +3,12 @@
  * example: ['en', 'fr', 'de']
  * This list can be configured via the environment variable I18N_LANGUAGES.
  */
-export const AvailableLanguages: string[] =
+export const AvailableLanguages =
   typeof import.meta !== 'undefined' && import.meta.env?.I18N_LANGUAGES
     ? import.meta.env?.I18N_LANGUAGES.split(',')
-    : ['en']
+    : (['en'] as const)
+
+export type AvailableLanguage = (typeof AvailableLanguages)[number]
 
 export const DefaultLanguage: string =
   typeof import.meta !== 'undefined' && import.meta.env?.I18N_DEFAULT_LOCALE
