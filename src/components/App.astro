@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import { AvailableLanguages, Basename, DefaultLanguage } from "../constants";
+import ViewportManager from "./ViewportManager";
+import AppComponent from "./App";
+import Menu from "./Menu";
+import type { StoryTableOfContent } from "../types";
+const { pathname } = Astro.url;
+// get all stories
+const stories = await getCollection('stories')
+console.log(stories.length, 'stories found', stories);
+
+// get current language 
+const lang:string  = (Astro.currentLocale || DefaultLanguage)
+
+const TableOfContents:StoryTableOfContent[] = stories.map(story => ({
+  id: story.id,
+  title: story.data.title[lang],
+  ordering: story.data.ordering || stories.length,
+  sections: story.data.sections.map((section, idx) => ({
+    id: `${story.id}-${idx}`,
+    title: section.title[lang],
+  })),
+})).sort((a, b) => a.ordering - b.ordering);
+
+---
+
+<AppComponent client:only basename={Basename} 
+  lang={lang} availableLanguages={AvailableLanguages} tableOfContents={TableOfContents}>
+</AppComponent>
+
+

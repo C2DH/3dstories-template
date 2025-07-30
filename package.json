@@ -1,0 +1,32 @@
+{
+  "name": "callous-centauri",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.3.0",
+    "@astrolib/seo": "^1.0.0-beta.8",
+    "@react-spring/web": "^10.0.1",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "astro": "^5.12.4",
+    "chalk": "^5.4.1",
+    "dotenv": "^17.2.1",
+    "i18next": "^25.3.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-i18next": "^15.6.1",
+    "react-responsive": "^10.0.1",
+    "react-router": "^7.7.1",
+    "react-router-dom": "^7.7.1",
+    "tailwindcss": "^4.1.11",
+    "ua-parser-js": "^2.0.4",
+    "zustand": "^5.0.6"
+  }
+}

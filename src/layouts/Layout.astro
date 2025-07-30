@@ -1,0 +1,42 @@
+---
+
+import { ClientRouter } from "astro:transitions";
+
+// import "../styles/fonts.css";
+import "../styles/global.css";
+import { Basename } from "../constants";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+const favicon = Basename + "/favicon.svg";
+---
+
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description ?? 'Explore and work programmatically with the Impresso Corpus, Data and Models.'} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="shortcut icon" type="image/svg+xml" href={favicon} />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<style>
+			main{
+				margin: auto;
+				padding: 1rem;
+				margin-top: 100px;
+				width: 800px;
+				max-width: calc(100% - 2rem);
+			}
+		</style>
+		<ClientRouter />
+	</head>
+	<body>
+			<slot />
+	</body>
+</html>
