@@ -40,6 +40,7 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
       {sections.map((section) => (
         <div
           key={section.id}
+          id={section.id}
           className='flex flex-col items-center justify-center text-center p-4'
           style={{
             height: height * defaultPageSpeed,

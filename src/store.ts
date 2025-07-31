@@ -74,3 +74,15 @@ export const useScrollStore = create<ScrollState>((set, get) => ({
     }),
   setMenuLinkPosition: (menuLinkPosition) => set({ menuLinkPosition }),
 }))
+
+interface SceneState {
+  storyId: string
+  duration: number
+  update: ({ storyId, duration }: { storyId: string; duration: number }) => void
+}
+
+export const useSceneStore = create<SceneState>((set) => ({
+  storyId: 'home',
+  duration: 10,
+  update: ({ storyId, duration }) => set({ storyId, duration }),
+}))

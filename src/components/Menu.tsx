@@ -8,7 +8,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ lang, items = [] }) => {
   return (
-    <nav>
+    <nav className='fixed bottom-0 right-0 z-20 bg-white p-4 shadow-lg'>
       <ul>
         {items.map((story) => (
           <li key={story.id}>

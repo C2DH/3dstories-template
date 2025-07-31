@@ -7,7 +7,8 @@ import type { AvailableLanguage } from '../constants'
 import Story from './Story'
 import '../styles/global.css'
 import ScrollDebug from './ScrollDebug'
-import World from './World'
+import Scene from './Scene'
+import { useSceneStore } from '../store'
 const AppRouterLayout: React.FC<{
   lang: string
   tableOfContents: StoryTableOfContent[]
@@ -18,7 +19,7 @@ const AppRouterLayout: React.FC<{
       <ScrollDebug />
       <Menu lang={lang} items={tableOfContents} />
       <Outlet />
-      <World></World>
+      <Scene />
     </>
   )
 }
@@ -29,6 +30,7 @@ const App: React.FC<{
   tableOfContents: StoryTableOfContent[]
   availableLanguages: AvailableLanguage[]
 }> = ({ basename, availableLanguages = AvailableLanguages, ...props }) => {
+  const updateSceneStore = useSceneStore((state) => state.update)
   const router = createBrowserRouter(
     [
       {
@@ -42,7 +44,6 @@ const App: React.FC<{
           ...availableLanguages.map((lang) => ({
             path: lang,
             element: null,
-
             children: props.tableOfContents.map((story) => ({
               path: story.id,
               Component: Story,
@@ -56,9 +57,14 @@ const App: React.FC<{
                   lang,
                   dataUrl
                 )
+                const data = await fetch(dataUrl).then((res) => res.json())
+                updateSceneStore({
+                  storyId: story.id,
+                  duration: 15,
+                })
                 return {
                   lang,
-                  data: await fetch(dataUrl).then((res) => res.json()),
+                  data,
                 }
               },
             })),
