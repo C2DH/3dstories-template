@@ -1,17 +1,16 @@
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router'
 import ViewportManager from './ViewportManager'
 import Menu from './Menu'
-import type { StoryTableOfContent } from '../types'
+import type { StoryToCItem, StoryData } from '../types'
 import { AvailableLanguages, Basename } from '../constants'
 import type { AvailableLanguage } from '../constants'
 import Story from './Story'
 import '../styles/global.css'
 import ScrollDebug from './ScrollDebug'
-import Scene from './Scene'
-import { useSceneStore } from '../store'
+
 const AppRouterLayout: React.FC<{
   lang: string
-  tableOfContents: StoryTableOfContent[]
+  tableOfContents: StoryToCItem[]
 }> = ({ lang, tableOfContents }) => {
   return (
     <>
@@ -19,7 +18,6 @@ const AppRouterLayout: React.FC<{
       <ScrollDebug />
       <Menu lang={lang} items={tableOfContents} />
       <Outlet />
-      <Scene />
     </>
   )
 }
@@ -27,10 +25,10 @@ const AppRouterLayout: React.FC<{
 const App: React.FC<{
   lang: string
   basename: string
-  tableOfContents: StoryTableOfContent[]
+  tableOfContents: StoryToCItem[]
   availableLanguages: AvailableLanguage[]
 }> = ({ basename, availableLanguages = AvailableLanguages, ...props }) => {
-  const updateSceneStore = useSceneStore((state) => state.update)
+  // const updateSceneStore = useSceneStore((state) => state.update)
   const router = createBrowserRouter(
     [
       {
@@ -44,27 +42,29 @@ const App: React.FC<{
           ...availableLanguages.map((lang) => ({
             path: lang,
             element: null,
-            children: props.tableOfContents.map((story) => ({
-              path: story.id,
+            children: props.tableOfContents.map((storyTocItem) => ({
+              path: storyTocItem.id,
               Component: Story,
               loader: async () => {
-                const dataUrl = `${Basename}/data/${story.id}.json`
+                const dataUrl = `${Basename}/data/${storyTocItem.id}.json`
                 // return data from here
                 console.debug(
                   '[App] loader for story:',
-                  story.id,
+                  storyTocItem.id,
                   '- lang:',
                   lang,
                   dataUrl
                 )
-                const data = await fetch(dataUrl).then((res) => res.json())
-                updateSceneStore({
-                  storyId: story.id,
-                  duration: 15,
-                })
+                const story: {
+                  id: string
+                  data: StoryData
+                } = await fetch(dataUrl).then((res) => res.json())
+
                 return {
+                  id: storyTocItem.id,
                   lang,
-                  data,
+                  duration: storyTocItem.duration,
+                  data: story.data,
                 }
               },
             })),

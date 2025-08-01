@@ -1,12 +1,18 @@
 import { getCollection } from 'astro:content'
 import { AvailableLanguages } from '../../constants'
+import type { StoryData } from '../../types'
 
 export async function getStaticPaths() {
   const stories = await getCollection('stories')
   return AvailableLanguages.map((lang) =>
     stories.map((story) => ({
-      params: { id: story.id, lang },
-      props: { story },
+      params: { id: story.id },
+      props: {
+        story: {
+          id: story.id,
+          data: story.data as StoryData,
+        },
+      },
     }))
   ).flat()
 }
@@ -17,11 +23,7 @@ export async function GET({
   props: {
     story: {
       id: string
-
-      data: {
-        title: string
-        content?: string
-      }
+      data: StoryData
     }
   }
 }) {
@@ -29,14 +31,5 @@ export async function GET({
     return new Response('Story not found', { status: 404 })
   }
   console.log('Fetching stories...', props)
-  return new Response(
-    JSON.stringify(
-      {
-        id: props.story.id,
-        ...props.story.data,
-      },
-      null,
-      2
-    )
-  )
+  return new Response(JSON.stringify(props.story, null, 2))
 }

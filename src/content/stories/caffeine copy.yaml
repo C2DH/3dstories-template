@@ -7,6 +7,9 @@ content:
   fr: La caféine est connue de beaucoup d'entre nous à travers le café, le thé noir et les boissons énergisantes, où nous bénéficions de sa capacité à augmenter l'attention et à nous maintenir éveillés. Elle est naturellement présente dans le thé et le café, mais est parfois délibérément ajoutée à d'autres produits comme les boissons énergisantes.
   de: Koffein ist vielen von uns durch Kaffee, schwarzen Tee und Energy-Drinks bekannt, wo wir von seiner Fähigkeit profitieren, die Aufmerksamkeit zu steigern und uns wach zu halten. Es kommt natürlich in Tee und Kaffee vor, wird aber manchmal gezielt anderen Produkten wie Energy-Drinks zugesetzt.
 ordering: 1
+settings:
+  scene: CharacterScene.tsx
+
 sections:
   - title:
       en: A natural stimulant
