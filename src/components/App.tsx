@@ -64,6 +64,7 @@ const App: React.FC<{
                   id: storyTocItem.id,
                   lang,
                   duration: storyTocItem.duration,
+                  editable: story.data.settings.editable,
                   data: story.data,
                 }
               },
