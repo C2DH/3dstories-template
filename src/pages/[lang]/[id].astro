@@ -8,13 +8,14 @@ import { getCollection } from "astro:content";
 export async function getStaticPaths() {
   const stories = await getCollection('stories');
 	return AvailableLanguages.map(lang => stories.map(story => ({
-		 params: { id: story.id, lang }, props: { story }
-	
+		params: { id: story.id, lang }, props: { story }
 	}))).flat();
 }
+
 const { story } = Astro.props;
-const title = '3D Stories Template';
-const description = '3D Stories Template is a starter template for building 3D stories with Astro. It provides a flexible structure to create immersive web experiences.';
+const title = `${story.data.title[Astro.params.lang]} - 3D Stories Template`;
+const description =  story.data.excerpt[Astro.params.lang]
+
 ---
 
 <Layout 
@@ -26,7 +27,21 @@ const description = '3D Stories Template is a starter template for building 3D s
 	description={description}
 	canonical={CanonicalUrl}
 />
-id: {story.id}, lang: {Astro.params.lang}
-<br/>
 	<App transition:persist />
 </Layout>
+<noscript>
+	<h1>{story.data.title[Astro.params.lang]}</h1>
+	<div>{story.data.content[Astro.params.lang]}</div>
+	{story.data.sections.map((section) => (
+		<section>
+			<h2>{section.title[Astro.params.lang]}</h2>
+			<div>{section.content[Astro.params.lang]}</div>
+		</section>
+	))}
+	{story.data.footer && (
+		<footer>
+			<h3>{story.data.footer.title[Astro.params.lang]}</h3>
+			<div>{story.data.footer.content[Astro.params.lang]}</div>
+		</footer>
+	)}
+</noscript>
