@@ -30,6 +30,5 @@ export async function GET({
   if (!props.story) {
     return new Response('Story not found', { status: 404 })
   }
-  console.log('Fetching stories...', props)
   return new Response(JSON.stringify(props.story, null, 2))
 }
