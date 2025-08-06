@@ -1,0 +1,46 @@
+title:
+  en: Introduction
+  fr: Introduction
+  de: Einführung
+
+excerpt:
+  en: This is the introduction to the 3dstories template. It provides an overview of the template's features and how to use it.
+  fr: Il s'agit de l'introduction au modèle 3dstories. Il fournit un aperçu des fonctionnalités du modèle et de son utilisation.
+  de: Dies ist die Einführung in die 3dstories-Vorlage. Sie bietet einen Überblick über die Funktionen der Vorlage und deren Verwendung.
+
+content:
+  en: Have you ever wondered how to create interactive stories on the web? This template is designed to help you get started with 3D stories, providing a framework for creating engaging narratives that can be experienced in a web browser. Whether you're a developer, historian, designer, or storyteller, this template offers the tools you need to bring your ideas to life.
+  fr: Vous êtes-vous déjà demandé comment créer des histoires interactives sur le web ? Ce modèle est conçu pour vous aider à démarrer avec les histoires en 3D, en fournissant un cadre pour créer des récits engageants qui peuvent être vécus dans un navigateur web. Que vous soyez développeur, historien, designer ou conteur, ce modèle offre les outils nécessaires pour donner vie à vos idées.
+  de: Haben Sie sich jemals gefragt
+
+settings:
+  scene: CharacterScene.tsx
+  state: introduction.json
+  editable: false
+sections:
+  - id: introduction
+    title:
+      en: Introduction
+      fr: Introduction
+      de: Einführung
+    content:
+      en: This section introduces the 3dstories template and its features.
+      fr: Cette section présente le modèle 3dstories et ses fonctionnalités.
+      de: In diesem Abschnitt wird die 3dstories-Vorlage und ihre Funktionen vorgestellt.
+
+footer:
+  title:
+    en: What's next?
+    fr: Et ensuite ?
+    de: Was kommt als Nächstes?
+  content:
+    en: Have a look at the stories below to learn more about 3dstories.
+    fr: Jetez un œil aux histoires ci-dessous pour en savoir plus sur 3dstories.
+    de: Werfen Sie einen Blick auf die Geschichten unten, um mehr über 3dst
+
+  additionalLinks:
+    - url: 'https://github.com/c2dh/3dstories-template'
+      title:
+        en: Source code
+        fr: Code source
+        de: Quellcode
