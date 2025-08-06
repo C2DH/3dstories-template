@@ -1,13 +1,15 @@
 import { editable as e } from '@theatre/r3f'
 import { PerspectiveCamera } from '@theatre/r3f'
-import { Model as Character } from '../models/Character'
+import ArmorModel from '../models/Armor'
+import { Suspense } from 'react'
+
 const CharacterScene = () => {
   return (
     <>
       <PerspectiveCamera
         theatreKey={'Camera'}
         makeDefault
-        position={[5, 5, -5]}
+        position={[5, -5, -5]}
         fov={75}
       />
 
@@ -21,12 +23,12 @@ const CharacterScene = () => {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      <e.mesh castShadow receiveShadow theatreKey={'Box'}>
+      <e.mesh castShadow receiveShadow theatreKey={'Character'}>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color='orange' />
       </e.mesh>
-      <e.group theatreKey='Character'>
-        <Character position={[0, 0.4, 0]} rotation={0} scale={4} />
+      <e.group theatreKey='Armor'>
+        <ArmorModel position={[0, 0.4, 0]} rotation={0} scale={4} />
       </e.group>
     </>
   )
