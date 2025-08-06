@@ -1,16 +1,6 @@
-import { SheetProvider } from '@theatre/r3f'
-import studio from '@theatre/studio'
-import extension from '@theatre/r3f/dist/extension'
-import { getProject } from '@theatre/core'
-import { lazy, Suspense, useEffect, useRef } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { useSpring, config } from '@react-spring/web'
-import { useScrollStore } from '../store'
-
-if (import.meta.env.MODE === 'development') {
-  studio.initialize()
-  studio.extend(extension)
-}
+import { getProject, type IProject } from '@theatre/core'
+import { useEffect, useState } from 'react'
+import SceneManagerCanvas from './SceneManagerCanvas'
 
 const availableSceneComponents = Object.keys(
   import.meta.glob('./scenes/*.tsx')
@@ -25,9 +15,29 @@ const availableSceneComponents = Object.keys(
   {} as Record<string, string>
 )
 
+const availableSceneStates = Object.keys(
+  import.meta.glob('./states/*.json')
+).reduce(
+  (acc, path) => {
+    const statePath = path.replace('./states/', '')
+    if (statePath) {
+      acc[statePath] = path
+    }
+    return acc
+  },
+  {} as Record<string, string>
+)
+
 interface SceneManagerProps {
+  editable?: boolean
   duration: number
   projectName: string
+  // Optional path to the Theatre.js project state JSON file
+  // relative to the `./states/` folder.
+  // If provided, the scene will use this state to initialize the Theatre.js project.
+  // If not provided, the scene will use the Theatre.js local database, named after the story identifier.
+
+  statePath?: string
   sheetName: string
   // e.g., './MyComponent.tsx'
   componentPath: string
@@ -39,74 +49,116 @@ interface SceneManagerProps {
 }
 
 const SceneManager: React.FC<SceneManagerProps> = ({
+  editable = false,
   duration,
   projectName,
   sheetName,
+  statePath,
   componentPath,
   gl = {
     preserveDrawingBuffer: true,
     antialias: false,
   },
-}: SceneManagerProps) => {
-  if (!availableSceneComponents[componentPath]) {
-    console.error(
-      `[SceneManager] Component path "${componentPath}" not found in available src/components/scenes fodler. Available components: ${Object.keys(
-        availableSceneComponents
-      ).join(', ')}`
-    )
-    return null
-  }
+}) => {
+  const [project, setProject] = useState<IProject | null>(null)
+
   useEffect(() => {
-    if (import.meta.env.MODE === 'development') {
-      studio.initialize()
-      studio.extend(extension)
+    if (!availableSceneComponents[componentPath]) {
+      console.error(
+        `[SceneManager] Component path "${componentPath}" not found in available src/components/scenes fodler. Available components: ${Object.keys(
+          availableSceneComponents
+        ).join(', ')}`
+      )
+      return
     }
-  }, [])
-  const LazyComponent = lazy(
-    () => import(/* @vite-ignore */ availableSceneComponents[componentPath])
-  )
 
-  const scrollRatioRef = useRef(useScrollStore.getState().scrollRatio)
-  // const storyId = 'test'
-  const sheet = getProject(projectName).sheet(sheetName)
-  const [, apiTheatre] = useSpring(() => ({
-    position: 0,
-    config: config.molasses,
-    onChange: ({ value }) => {
-      sheet.sequence.position = value.position
-    },
-  }))
+    if (statePath && !availableSceneStates[statePath]) {
+      console.error(
+        `[SceneManager] State "${statePath}" not found in available src/components/states folder. Available states: ${Object.keys(
+          availableSceneStates
+        ).join(', ')}`
+      )
+      return
+    }
+    const loadStudioAndState = async () => {
+      let project = null
+      console.debug(
+        '[SceneManager] Loading Theatre.js project:',
+        projectName,
+        '- statePath:',
+        statePath,
+        '- sheetName:',
+        sheetName,
+        '- componentPath:',
+        componentPath,
+        '- editable:',
+        editable
+      )
+      // 1. Initialize Theatre.js Studio if editable
+      if (editable) {
+        try {
+          const extensionModule = await import(
+            /* @vite-ignore */ '@theatre/r3f/dist/extension'
+          )
+          const extension = extensionModule.default
+          const studioModule = await import(
+            /* @vite-ignore */ '@theatre/studio'
+          )
+          const studio = studioModule.default
+          studio.initialize()
+          studio.extend(extension)
+        } catch (err) {
+          console.error(`Could not initialize Theatre.js studio`, err)
+          // Still continue to load the state even if studio init fails
+        }
+      }
 
-  useEffect(() => {
-    apiTheatre.set({
-      position: 0,
-    })
-    return useScrollStore.subscribe((state) => {
-      scrollRatioRef.current = state.scrollRatio
-      apiTheatre.start({
-        position: scrollRatioRef.current * duration,
-      })
-    })
+      // 2. Dynamically import state
+      if (statePath && availableSceneStates[statePath]) {
+        try {
+          const stateAsJson = await import(
+            /* @vite-ignore */ availableSceneStates[statePath]
+          )
+          const state = stateAsJson.default
+          project = getProject(projectName, { state })
+        } catch (err) {
+          console.warn(
+            `No state available for Theatre Project. Could not load state module: ${statePath}`,
+            err
+          )
+          project = getProject(projectName)
+        }
+      } else if (statePath) {
+        console.warn(
+          `The state you selected is not available! State path "${statePath}" not found in availableSceneStates`
+        )
+      }
+      if (!project) {
+        // initialize with in memory project
+        project = getProject(projectName)
+      }
+      await project.ready
+      setProject(project)
+    }
+
+    loadStudioAndState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration, projectName])
+  }, [])
+
+  if (!project) {
+    return <div>Loading scene</div>
+  }
+
+  const sheet = project.sheet(sheetName)
 
   return (
-    <div className='fixed top-0 left-0 h-screen w-screen bg-gray-100 z-0'>
-      <Canvas
-        shadows
-        gl={gl}
-        camera={{
-          position: [5, -5, 0],
-          fov: 75,
-        }}
-      >
-        <SheetProvider key={projectName} sheet={sheet}>
-          <Suspense fallback={null}>
-            <LazyComponent />
-          </Suspense>
-        </SheetProvider>
-      </Canvas>
-    </div>
+    <SceneManagerCanvas
+      duration={duration}
+      sheetProviderKey={`${projectName}-${sheetName}`}
+      sheet={sheet}
+      componentImportPath={availableSceneComponents[componentPath]}
+      gl={gl}
+    />
   )
 }
 
