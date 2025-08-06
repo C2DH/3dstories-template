@@ -8,10 +8,11 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
   defaultPageSpeed = 1.5,
 }) => {
   const height = useViewportStore((state) => state.availableHeight)
-  const { id, lang, duration, data } = useLoaderData() as {
+  const { id, lang, duration, editable, data } = useLoaderData() as {
     id: string
     lang: string
     duration: number
+    editable: boolean
     data: StoryData
   }
 
@@ -66,8 +67,10 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
       </div>
       <SceneManager
         key={id}
+        editable={editable}
         duration={duration}
         projectName={id}
+        statePath={data.settings.state}
         sheetName={data.settings.sheet || id}
         componentPath={data.settings.scene}
       ></SceneManager>
