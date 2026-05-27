@@ -1,0 +1,33 @@
+title:
+  en: Skřítek - Wooden Statue
+  fr: Skřítek - Statue en Bois
+
+excerpt:
+  en: Discover the story behind this intricately carved wooden statue known as Skřítek.
+  fr: Découvrez l'histoire derrière cette statue en bois finement sculptée connue sous le nom de Skřítek.
+
+content:
+  en: This story explores the origins and craftsmanship of a wooden statue called Skřítek, a figure rooted in Central European folk tradition.
+  fr: Cette histoire explore les origines et le savoir-faire d'une statue en bois appelée Skřítek, une figure ancrée dans la tradition folklorique d'Europe centrale.
+
+settings:
+  scene: skritek-wooden-statue.tsx
+  state: skritek-wooden-statue.json
+  editable: false
+  withTheaterJS: false
+
+sections:
+  - id: skritek-wooden-statue
+    title:
+      en: The Wooden Statue
+      fr: La Statue en Bois
+    content:
+      en: Carved from a single piece of wood, this statue depicts a Skřítek — a mischievous sprite from Czech and Slovak folklore, believed to bring luck or misfortune to those who encounter it.
+      fr: Taillée dans un seul bloc de bois, cette statue représente un Skřítek — un lutin espiègle du folklore tchèque et slovaque, réputé pour apporter chance ou malheur à ceux qui le rencontrent.
+  - id: skritek-wooden-statue-section-2
+    title:
+      en: Folk Tradition and Craft
+      fr: Tradition Populaire et Artisanat
+    content:
+      en: The art of carving wooden figures like the Skřítek has been passed down through generations, each piece reflecting the unique skill and cultural heritage of its maker.
+      fr: L'art de sculpter des figures en bois comme le Skřítek se transmet de génération en génération, chaque pièce reflétant le savoir-faire unique et le patrimoine culturel de son créateur.

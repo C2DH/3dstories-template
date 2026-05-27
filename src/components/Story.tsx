@@ -2,7 +2,9 @@ import type { StoryData } from '../types'
 import { useLoaderData } from 'react-router'
 import ScrollManager from './ScrollManager'
 import { useViewportStore } from '../store'
-import SceneManager from './SceneManager'
+import { lazy } from 'react'
+
+const SceneManagerLite = lazy(() => import('./SceneManagerLite'))
 
 const Story: React.FC<{ defaultPageSpeed?: number }> = ({
   defaultPageSpeed = 1.5,
@@ -27,12 +29,14 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
       title: section.title[lang],
       content: section.content ? section.content[lang] : undefined,
     })) || []
-
+  console.info('[Story] data loaded SceneManagerLite')
+  const SceneManager = SceneManagerLite
+  const usingFallbackTheatre = false
   return (
     <>
-      <div className='absolute inset-0 z-10'>
+      <div className='absolute inset-0 z-10 pointer-events-none'>
         <div
-          className='flex flex-col items-center justify-center text-center p-4'
+          className='flex flex-col items-center justify-center text-center p-4 w-1/2'
           style={{
             height: height,
             overflowY: 'hidden',
@@ -55,7 +59,12 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
               overflowY: 'hidden',
             }}
           >
-            <h2 className='text-2xl font-bold mb-2'>{section.title}</h2>
+            <h2 className='text-2xl font-bold mb-2'>
+              {section.title}{' '}
+              {usingFallbackTheatre
+                ? '(with Theatre.js fallback)'
+                : '(with lightweight player)'}
+            </h2>
             {section.content && <p className='mb-2'>{section.content}</p>}
           </div>
         ))}

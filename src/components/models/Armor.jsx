@@ -1,7 +1,8 @@
 import { useGLTF } from '@react-three/drei'
 import { forwardRef, useEffect } from 'react'
+import { Basename } from '../../constants'
 
-const modelUrl = '/models/armor.glb'
+const modelUrl = Basename + '/models/armor.glb'
 
 const ArmorModel = forwardRef(
   ({ position, rotation, scale, ...props }, ref) => {
@@ -26,7 +27,7 @@ const ArmorModel = forwardRef(
         />
       </group>
     )
-  }
+  },
 )
 
 useGLTF.preload(modelUrl)

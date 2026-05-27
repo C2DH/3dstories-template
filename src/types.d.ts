@@ -14,6 +14,7 @@ export interface StorySettings {
   state?: string // Optional path to the Theatre.js state file
   sheet?: string // Optional name fo the sheet
   editable?: boolean // Whether the scene is editable in development mode. Default to True
+  withTheaterJS?: boolean // Whether the scene uses Theatre.js for animation. Default to True
 }
 // StoryData describes the astro js content `data` property.
 export interface StoryData {

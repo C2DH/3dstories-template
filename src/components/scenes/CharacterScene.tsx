@@ -1,19 +1,54 @@
-import { editable as e } from '@theatre/r3f'
-import { PerspectiveCamera } from '@theatre/r3f'
+import { useMemo, useRef } from 'react'
+import { PerspectiveCamera } from '@react-three/drei'
+import type {
+  Group,
+  Mesh,
+  PerspectiveCamera as ThreePerspectiveCamera,
+  PointLight,
+} from 'three'
 import ArmorModel from '../models/Armor'
-import { Suspense } from 'react'
+import useAnimationPlayer from '../../hooks/useAnimationPlayer'
 
-const CharacterScene = () => {
+interface CharacterSceneProps {
+  animationState?: unknown
+  duration?: number
+}
+
+const CharacterScene: React.FC<CharacterSceneProps> = ({
+  animationState,
+  duration = 10,
+}) => {
+  const cameraRef = useRef<ThreePerspectiveCamera | null>(null)
+  const lightRef = useRef<PointLight | null>(null)
+  const characterRef = useRef<Mesh | null>(null)
+  const armorRef = useRef<Group | null>(null)
+
+  const bindings = useMemo(
+    () => ({
+      camera: cameraRef,
+      light: lightRef,
+      character: characterRef,
+      armor: armorRef,
+    }),
+    [],
+  )
+
+  useAnimationPlayer({
+    animationData: animationState,
+    durationSeconds: duration,
+    bindings,
+  })
+
   return (
     <>
       <PerspectiveCamera
-        theatreKey={'Camera'}
+        ref={cameraRef}
         makeDefault
         position={[5, -5, -5]}
         fov={75}
       />
 
-      <e.pointLight theatreKey={'Light'} position={[10, 10, 10]} />
+      <pointLight ref={lightRef} position={[10, 10, 10]} />
       <ambientLight />
       {/* Add a directional light from the right to cast a right shadow */}
       <directionalLight
@@ -23,13 +58,13 @@ const CharacterScene = () => {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      <e.mesh castShadow receiveShadow theatreKey={'Character'}>
+      <mesh ref={characterRef} castShadow receiveShadow>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color='orange' />
-      </e.mesh>
-      <e.group theatreKey='Armor'>
-        <ArmorModel position={[0, 0.4, 0]} rotation={0} scale={4} />
-      </e.group>
+      </mesh>
+      <group ref={armorRef} position={[0, 0.4, 0]} scale={[4, 4, 4]}>
+        <ArmorModel />
+      </group>
     </>
   )
 }
