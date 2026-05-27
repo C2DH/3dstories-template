@@ -29,8 +29,14 @@ const SceneMinimap = () => {
     ctx.lineWidth = 1
     for (let i = 1; i < 4; i++) {
       const p = (i / 4) * SIZE
-      ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, SIZE); ctx.stroke()
-      ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(SIZE, p); ctx.stroke()
+      ctx.beginPath()
+      ctx.moveTo(p, 0)
+      ctx.lineTo(p, SIZE)
+      ctx.stroke()
+      ctx.beginPath()
+      ctx.moveTo(0, p)
+      ctx.lineTo(SIZE, p)
+      ctx.stroke()
     }
 
     // Origin cross
@@ -38,8 +44,14 @@ const SceneMinimap = () => {
     const oz = toMap(0)
     ctx.strokeStyle = 'rgba(255,255,255,0.25)'
     ctx.lineWidth = 1
-    ctx.beginPath(); ctx.moveTo(ox - 6, oz); ctx.lineTo(ox + 6, oz); ctx.stroke()
-    ctx.beginPath(); ctx.moveTo(ox, oz - 6); ctx.lineTo(ox, oz + 6); ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(ox - 6, oz)
+    ctx.lineTo(ox + 6, oz)
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(ox, oz - 6)
+    ctx.lineTo(ox, oz + 6)
+    ctx.stroke()
 
     // Scene objects
     scene.traverse((obj) => {
@@ -67,9 +79,14 @@ const SceneMinimap = () => {
     camera.getWorldDirection(dir)
     ctx.strokeStyle = '#ef5350'
     ctx.lineWidth = 2
-    ctx.beginPath(); ctx.moveTo(cx, cz); ctx.lineTo(cx + dir.x * 16, cz + dir.z * 16); ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(cx, cz)
+    ctx.lineTo(cx + dir.x * 16, cz + dir.z * 16)
+    ctx.stroke()
     ctx.fillStyle = '#ef5350'
-    ctx.beginPath(); ctx.arc(cx, cz, 5, 0, Math.PI * 2); ctx.fill()
+    ctx.beginPath()
+    ctx.arc(cx, cz, 5, 0, Math.PI * 2)
+    ctx.fill()
 
     // Axis labels
     ctx.fillStyle = 'rgba(255,255,255,0.3)'
@@ -80,12 +97,32 @@ const SceneMinimap = () => {
 
   return (
     <Html
-      calculatePosition={(_el, _cam, size) => [size.width - SIZE - 16, size.height - SIZE - 46]}
+      calculatePosition={(_el, _cam, size) => [
+        size.width - SIZE - 16,
+        size.height - SIZE - 46,
+      ]}
       zIndexRange={[100, 0]}
     >
-      <div style={{ pointerEvents: 'none', borderRadius: 4, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.2)' }}>
+      <div
+        style={{
+          pointerEvents: 'none',
+          borderRadius: 4,
+          overflow: 'hidden',
+          border: '1px solid rgba(255,255,255,0.2)',
+        }}
+      >
         <canvas ref={canvasRef} width={SIZE} height={SIZE} />
-        <div style={{ padding: '3px 6px', background: 'rgba(10,10,20,0.8)', color: 'rgba(255,255,255,0.5)', display: 'flex', gap: 8, fontSize: 10, fontFamily: 'monospace' }}>
+        <div
+          style={{
+            padding: '3px 6px',
+            background: 'rgba(10,10,20,0.8)',
+            color: 'rgba(255,255,255,0.5)',
+            display: 'flex',
+            gap: 8,
+            fontSize: 10,
+            fontFamily: 'monospace',
+          }}
+        >
           <span style={{ color: '#ef5350' }}>● cam</span>
           <span style={{ color: '#4fc3f7' }}>● mesh</span>
           <span style={{ color: '#ffd54f' }}>● light</span>
