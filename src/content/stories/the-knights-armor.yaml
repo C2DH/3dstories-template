@@ -12,7 +12,7 @@ content:
 
 settings:
   scene: the-knights-armor.tsx
-  state: introduction.json
+  state: the-knights-armor.json
   editable: false
   withTheaterJS: false
 

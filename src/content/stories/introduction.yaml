@@ -16,7 +16,8 @@ content:
 settings:
   scene: CharacterScene.tsx
   state: introduction.json
-  editable: true
+  editable: false
+  withTheaterJS: false
 
 sections:
   - id: introduction

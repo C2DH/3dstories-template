@@ -4,22 +4,19 @@ import ScrollManager from './ScrollManager'
 import { useViewportStore } from '../store'
 import { lazy } from 'react'
 
-const SceneManagerWithTheaterJS = lazy(() => import('./SceneManager'))
 const SceneManagerLite = lazy(() => import('./SceneManagerLite'))
 
 const Story: React.FC<{ defaultPageSpeed?: number }> = ({
   defaultPageSpeed = 1.5,
 }) => {
   const height = useViewportStore((state) => state.availableHeight)
-  const { id, lang, duration, editable, data, withTheaterJS } =
-    useLoaderData() as {
-      id: string
-      lang: string
-      duration: number
-      editable: boolean
-      data: StoryData
-      withTheaterJS?: boolean
-    }
+  const { id, lang, duration, editable, data } = useLoaderData() as {
+    id: string
+    lang: string
+    duration: number
+    editable: boolean
+    data: StoryData
+  }
 
   const header = {
     title: data.title[lang],
@@ -32,18 +29,14 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
       title: section.title[lang],
       content: section.content ? section.content[lang] : undefined,
     })) || []
-  console.info(
-    '[Story] data loaded',
-    withTheaterJS ? 'SceneManagerWithTheaterJS' : 'SceneManagerLite',
-  )
-  const SceneManager = withTheaterJS
-    ? SceneManagerWithTheaterJS
-    : SceneManagerLite
+  console.info('[Story] data loaded SceneManagerLite')
+  const SceneManager = SceneManagerLite
+  const usingFallbackTheatre = false
   return (
     <>
-      <div className='absolute inset-0 z-10'>
+      <div className='absolute inset-0 z-10 pointer-events-none'>
         <div
-          className='flex flex-col items-center justify-center text-center p-4'
+          className='flex flex-col items-center justify-center text-center p-4 w-1/2'
           style={{
             height: height,
             overflowY: 'hidden',
@@ -68,7 +61,9 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
           >
             <h2 className='text-2xl font-bold mb-2'>
               {section.title}{' '}
-              {withTheaterJS ? '(with Theatre.js)' : '(without Theatre.js)'}
+              {usingFallbackTheatre
+                ? '(with Theatre.js fallback)'
+                : '(with lightweight player)'}
             </h2>
             {section.content && <p className='mb-2'>{section.content}</p>}
           </div>

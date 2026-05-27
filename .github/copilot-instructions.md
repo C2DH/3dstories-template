@@ -62,6 +62,38 @@ And also update the preload line at the end of the file:
 + useGLTF.preload(modelUrl)
 ```
 
+Also, convert the component to use `forwardRef` pointing at the root `<group>`, and add a `useEffect` that logs the bounding box to the console on mount. This is essential for diagnosing scale issues (the GLB may use unexpected units):
+
+```diff
+- import React from 'react'
+- import { useGLTF } from '@react-three/drei'
++ import { forwardRef, useEffect } from 'react'
++ import { useGLTF } from '@react-three/drei'
++ import * as THREE from 'three'
+```
+
+```diff
+- export function Model(props) {
+-   const { nodes, materials } = useGLTF(modelUrl)
+-   return (
+-     <group {...props} dispose={null}>
++ const Model = forwardRef((props, ref) => {
++   const { nodes, materials } = useGLTF(modelUrl)
++
++   useEffect(() => {
++     if (!ref?.current) return
++     const box = new THREE.Box3().setFromObject(ref.current)
++     const size = box.getSize(new THREE.Vector3())
++     console.log('[suggested-name] size:', size)
++     console.log('[suggested-name] bounds:', box.min, '->', box.max)
++   }, [])
++
++   return (
++     <group ref={ref} {...props} dispose={null}>
+```
+
+> ⚠️ **Why this matters**: GLB files from external sources (e.g. Sketchfab) often use centimeter-scale units, resulting in geometry spanning ±10 or more units. Without knowing the real size, setting `scale={4}` on the scene model can place the camera _inside_ the mesh, making it invisible. Use the logged size to set a reasonable `scale` in the scene (e.g. a 20-unit model needs `scale={0.1}` to appear as ~2 units tall).
+
 6. **Create a Scene component and import the Model in the Scene**
 
 - File Location: `src/components/scenes/[suggested-name].tsx`

@@ -15,6 +15,7 @@ const Model = forwardRef((props, ref) => {
   materials.material_0.depthWrite = true
   // materials.material_0.metalness = 0
   materials.material_0.transparent = true
+  console.log('Model rendered')
   return (
     <group {...props} dispose={null}>
       <mesh
