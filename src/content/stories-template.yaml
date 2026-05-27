@@ -1,0 +1,29 @@
+title:
+  en: [Insert Story Title]
+  fr: [Insert Story Title in French]
+
+excerpt:
+  en: [Insert a short excerpt in English, 10-200 chars]
+  fr: [Insert a short excerpt in French, 10-200 chars]
+
+content:
+  en: [Insert main story content in English]
+  fr: [Insert main story content in French]
+
+settings:
+  scene: [kebab-case-title].tsx
+  editable: true
+
+sections:
+  - title:
+      en: [Insert Story Title]
+      fr: [Insert Story Title in French]
+    content:
+      en: [Insert story content in English]
+      fr: [Insert story content in French]
+  - title:
+      en: [Insert Section 2 Title]
+      fr: [Insert Section 2 Title in French]
+    content:
+      en: [Insert section 2 content in English]
+      fr: [Insert section 2 content in French]

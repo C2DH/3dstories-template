@@ -9,8 +9,8 @@ const localizedZodObject = (baseSchema: z.ZodTypeAny) => {
         acc[lang] = baseSchema
         return acc
       },
-      {} as Record<(typeof AvailableLanguages)[number], z.ZodTypeAny>
-    )
+      {} as Record<(typeof AvailableLanguages)[number], z.ZodTypeAny>,
+    ),
   )
 }
 
@@ -26,7 +26,7 @@ const stories = defineCollection({
       z.object({
         title: localizedZodObject(z.string().min(2).max(100)),
         content: localizedZodObject(z.string().min(10)),
-      })
+      }),
     ),
     footer: z
       .object({
@@ -37,7 +37,7 @@ const stories = defineCollection({
             z.object({
               url: z.string().url(),
               title: localizedZodObject(z.string().max(100)),
-            })
+            }),
           )
           .optional(),
       })
@@ -57,6 +57,7 @@ const stories = defineCollection({
       // after the story identifier.
       state: z.string().optional(),
       editable: z.boolean().optional().default(true),
+      withTheaterJS: z.boolean().optional().default(true),
     }),
   }),
 })

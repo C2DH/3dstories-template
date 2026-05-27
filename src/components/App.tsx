@@ -53,7 +53,7 @@ const App: React.FC<{
                   storyTocItem.id,
                   '- lang:',
                   lang,
-                  dataUrl
+                  dataUrl,
                 )
                 const story: {
                   id: string
@@ -66,6 +66,7 @@ const App: React.FC<{
                   duration: storyTocItem.duration,
                   editable: story.data.settings.editable,
                   data: story.data,
+                  withTheaterJS: story.data.settings.withTheaterJS,
                 }
               },
             })),
@@ -75,7 +76,7 @@ const App: React.FC<{
     ],
     {
       basename,
-    }
+    },
   )
   return <RouterProvider router={router} />
 }

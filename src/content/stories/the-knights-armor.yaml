@@ -1,0 +1,33 @@
+title:
+  en: The Knight's Armor
+  fr: L'Armure du Chevalier
+
+excerpt:
+  en: Explore the intricate details of a medieval knight's armor and discover its history.
+  fr: Explorez les détails complexes d'une armure de chevalier médiéval et découvrez son histoire.
+
+content:
+  en: This story takes you on a journey through the craftsmanship and history behind a knight's armor, from the forge to the battlefield.
+  fr: Cette histoire vous emmène dans un voyage à travers le savoir-faire et l'histoire d'une armure de chevalier, de la forge au champ de bataille.
+
+settings:
+  scene: the-knights-armor.tsx
+  state: introduction.json
+  editable: false
+  withTheaterJS: false
+
+sections:
+  - id: the-knights-armor
+    title:
+      en: The Knight's Armor
+      fr: L'Armure du Chevalier
+    content:
+      en: A knight's armor was a marvel of medieval engineering, protecting its wearer while allowing freedom of movement.
+      fr: L'armure d'un chevalier était une merveille de l'ingénierie médiévale, protégeant son porteur tout en lui permettant une liberté de mouvement.
+  - id: the-knights-armor-section-2
+    title:
+      en: The Craft of Armor Making
+      fr: L'Art de la Fabrication d'Armures
+    content:
+      en: Skilled armorers spent months crafting each piece, fitting the armor precisely to the knight who would wear it into battle.
+      fr: Des armuriers qualifiés passaient des mois à fabriquer chaque pièce, ajustant l'armure avec précision au chevalier qui la porterait au combat.

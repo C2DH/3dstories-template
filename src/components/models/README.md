@@ -21,17 +21,18 @@ This folder contains the 3D models used in the **3DStories** application. Each m
 3. **Update the Model URL**  
    Adjust the `useGLTF` path to match the public folder structure:
 
-   ```diff
-   - const { scene, animations } = useGLTF('character.glb')
-   + const { scene, animations } = useGLTF('/models/character.glb')
+   ```ts
+   useGLTF(modelUrl)
    ```
 
    And also update the preload line:
 
    ```diff
    - useGLTF.preload('character.glb')
-   + useGLTF.preload('/models/character.glb')
+   + useGLTF.preload('modelUrl')
    ```
+
+   - File Location: `src/components/models/[ModelName].jsx` or `.tsx`
 
 ---
 

@@ -2,19 +2,24 @@ import type { StoryData } from '../types'
 import { useLoaderData } from 'react-router'
 import ScrollManager from './ScrollManager'
 import { useViewportStore } from '../store'
-import SceneManager from './SceneManager'
+import { lazy } from 'react'
+
+const SceneManagerWithTheaterJS = lazy(() => import('./SceneManager'))
+const SceneManagerLite = lazy(() => import('./SceneManagerLite'))
 
 const Story: React.FC<{ defaultPageSpeed?: number }> = ({
   defaultPageSpeed = 1.5,
 }) => {
   const height = useViewportStore((state) => state.availableHeight)
-  const { id, lang, duration, editable, data } = useLoaderData() as {
-    id: string
-    lang: string
-    duration: number
-    editable: boolean
-    data: StoryData
-  }
+  const { id, lang, duration, editable, data, withTheaterJS } =
+    useLoaderData() as {
+      id: string
+      lang: string
+      duration: number
+      editable: boolean
+      data: StoryData
+      withTheaterJS?: boolean
+    }
 
   const header = {
     title: data.title[lang],
@@ -27,7 +32,13 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
       title: section.title[lang],
       content: section.content ? section.content[lang] : undefined,
     })) || []
-
+  console.info(
+    '[Story] data loaded',
+    withTheaterJS ? 'SceneManagerWithTheaterJS' : 'SceneManagerLite',
+  )
+  const SceneManager = withTheaterJS
+    ? SceneManagerWithTheaterJS
+    : SceneManagerLite
   return (
     <>
       <div className='absolute inset-0 z-10'>
@@ -55,7 +66,10 @@ const Story: React.FC<{ defaultPageSpeed?: number }> = ({
               overflowY: 'hidden',
             }}
           >
-            <h2 className='text-2xl font-bold mb-2'>{section.title}</h2>
+            <h2 className='text-2xl font-bold mb-2'>
+              {section.title}{' '}
+              {withTheaterJS ? '(with Theatre.js)' : '(without Theatre.js)'}
+            </h2>
             {section.content && <p className='mb-2'>{section.content}</p>}
           </div>
         ))}
