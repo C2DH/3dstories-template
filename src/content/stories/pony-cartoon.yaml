@@ -1,0 +1,33 @@
+title:
+  en: Pony Cartoon
+  fr: Poney Dessin Animé
+
+excerpt:
+  en: A playful pony rides through a bright, cartoon-like world.
+  fr: Un poney joueur traverse un monde lumineux et inspiré des dessins animés.
+
+content:
+  en: This story follows a cheerful pony as it wanders through a stylized world of color, motion, and simple shapes.
+  fr: Cette histoire suit un poney joyeux qui traverse un monde stylisé fait de couleurs, de mouvement et de formes simples.
+
+settings:
+  scene: pony-cartoon.tsx
+  state: pony-cartoon.json
+  editable: false
+  withTheaterJS: false
+
+sections:
+  - id: pony-cartoon
+    title:
+      en: A Cartoon Ride
+      fr: Une Balade Dessin Animé
+    content:
+      en: The pony enters a small animated scene where the camera slowly circles around its bright silhouette.
+      fr: Le poney entre dans une petite scène animée où la caméra tourne lentement autour de sa silhouette lumineuse.
+  - id: pony-cartoon-section-2
+    title:
+      en: Color and Motion
+      fr: Couleurs et Mouvement
+    content:
+      en: Gentle lighting and a subtle turn of the model give the scene a lively, storybook feel.
+      fr: Un éclairage doux et une légère rotation du modèle donnent à la scène une ambiance vivante de livre illustré.

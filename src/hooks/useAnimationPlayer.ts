@@ -52,6 +52,10 @@ export const useAnimationPlayer = ({
         currentFrame,
       )
       applySampleToTarget(target, sampledValues)
+
+      if (typeof target.updateProjectionMatrix === 'function') {
+        target.updateProjectionMatrix()
+      }
     })
   })
 }
