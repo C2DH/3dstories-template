@@ -92,7 +92,8 @@ const Timeline: React.FC<TimelineProps> = ({
       const frame = resolveFrameFromScroll(state.scrollRatio, dur, fps)
       const x = sp + (frame / mf) * tw
       if (playheadRef.current) playheadRef.current.style.left = `${x}%`
-      if (tooltipRef.current) tooltipRef.current.textContent = `${Math.round(frame)}`
+      if (tooltipRef.current)
+        tooltipRef.current.textContent = `${Math.round(frame)}`
     })
   }, [])
 

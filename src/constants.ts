@@ -34,3 +34,5 @@ export const SiteDescription =
   typeof import.meta !== 'undefined' && import.meta.env?.PUBLIC_SITE_DESCRIPTION
     ? import.meta.env?.PUBLIC_SITE_DESCRIPTION
     : 'A template for creating 3D stories with Astro and Three.js'
+
+export const TARGET_HEIGHT: number = 2
